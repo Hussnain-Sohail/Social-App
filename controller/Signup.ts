@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import z from 'zod';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import User from '../model/UserSchema';
+import User from '../model/UserSchema.ts';
 
 const userData = z.object({
     userName: z.string(),
@@ -13,7 +13,7 @@ async function Signup(req: Request, res: Response): Promise<void> {
     try {
         const validData = userData.safeParse(req.body);
         if (!validData.success) {
-            res.status(400).json({ message: validData.error.issues[0].message });
+            res.status(400).json({ message: validData.error.issues[0]!.message });
             return;
         }
 

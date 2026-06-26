@@ -3,7 +3,7 @@ import z from 'zod';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import client from '../server/RedisClientProivder.ts';
-import User from '../model/UserSchema';
+import User from '../model/UserSchema.ts';
 
 const userData = z.object({
     userName: z.string(),
@@ -13,7 +13,7 @@ async function Login(req: Request, res: Response): Promise<void> {
     try {
         const validData = userData.safeParse(req.body);
         if (!validData.success) {
-            res.status(400).json({ message: validData.error.issues[0].message });
+            res.status(400).json({ message: validData.error.issues[0]!.message });
             return;
         }
         const key = `user/${validData.data.userName}`;
