@@ -5,6 +5,7 @@ export function Signup() {
     const [age, setAge] = useState(18);
     const [password, setPassword] = useState('');
     const [data, setData] = useState('');
+    const [requestsent, setRequestsent] = useState(false);
 
     const getValue = (setter: React.Dispatch<SetStateAction<string>>) => {
         return (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +22,7 @@ export function Signup() {
     const Submit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
+            setRequestsent(true);
             const request = await fetch('http://localhost:3500/signup', {
                 method: 'POST',
                 headers: {
@@ -33,10 +35,12 @@ export function Signup() {
 
             const response = await request.json();
             setData(response.message);
+            setRequestsent(false);
         }
         catch (error) {
             console.error(error);
             setData('Could not Submit request');
+            setRequestsent(false);
         }
     }
     return (
@@ -50,13 +54,12 @@ export function Signup() {
                         <input type='number' onChange={getIntegerValue(setAge)} required min={18} /><br />
                         <label>Enter Username</label><br />
                         <input type='password' onChange={getValue(setPassword)} required /><br />
-                        <button>Sign Up</button>
+                        <button>Sign Up  {requestsent && <span id="spinner"></span>}</button>
                     </form>
-                    {data && <p>{data}</p>}
                 </div>
+                {data && <h2 id="data">{data}</h2>}
             </div>
         </div>
     )
 }
-// background-color: #9F9FFF;
-//color: white;
+export default Signup

@@ -1,9 +1,12 @@
-import { Signup } from "./Signup"
+import Signup from "./Signup.tsx";
+import Login from './Login.tsx';
+import { Route, Routes } from 'react-router-dom';
 function App() {
     return (
-        <>
-            <Signup />
-        </>
+        <Routes>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+        </Routes>
     )
 }
 export default App
