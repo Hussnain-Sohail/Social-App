@@ -23,10 +23,6 @@ async function FeedFallback(user: IUser): Promise<IPosts[]> {
     return feedArray;
 }
 
-
-
-
-
 async function Helper(user: HydratedDocument<IUser> | null): Promise<any> {
     try {
         if (!user)
@@ -43,19 +39,14 @@ async function Helper(user: HydratedDocument<IUser> | null): Promise<any> {
                 for (const y of x)
                     followingFeed.push(y);
             }
-        }
+            return followingFeed;
+        } else
+            return null;
     }
     catch (error) {
         console.error(error);
     }
 }
-
-
-
-
-
-
-
 
 async function UserFeed(req: Request, res: Response): Promise<void> {
     try {
