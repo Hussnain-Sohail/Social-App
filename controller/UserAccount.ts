@@ -3,7 +3,7 @@ import User, { IUser } from '../model/UserSchema.ts';
 import type { Request, Response } from 'express';
 import IUseer from '../model/UserSchema.ts'
 
-async function AccountInformation(req: Request, res: Response) {
+async function AccountInformation(req: Request, res: Response): Promise<void> {
     try {
         const userId = req.user.userId;
         const key: string = `user${userId}`;
@@ -28,7 +28,7 @@ async function AccountInformation(req: Request, res: Response) {
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error', user: null });
     }
 }
 
